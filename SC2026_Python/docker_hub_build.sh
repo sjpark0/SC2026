@@ -1,0 +1,1 @@
+docker buildx build --push --platform linux/amd64 --tag 10.254.182.120:5500/etri_scapi:0.2.1 .

@@ -1,0 +1,13 @@
+{
+    "name" : "etri_scapi",
+    "image" : "10.254.182.120:5500/etri_scapi:0.2.1",
+    "workspaceMount": "source=${localWorkspaceFolder}/SC2026_Python/modules,target=/etri_workspace,type=bind",
+    "workspaceFolder": "/etri_workspace",
+    "runArgs": ["--gpus=all"],
+    "mounts" : [
+        "source=${localWorkspaceFolder}/VideoData/VideoSample,target=/etri_workspace/Data,type=bind",
+        "source=${localWorkspaceFolder}/VideoData/Output,target=/etri_workspace/Output,type=bind",
+        "source=${localWorkspaceFolder}/VideoData/Input,target=/etri_workspace/Input,type=bind",
+        "source=${localWorkspaceFolder},target=/etri_workspace/SC2026,type=bind"        
+    ]
+}

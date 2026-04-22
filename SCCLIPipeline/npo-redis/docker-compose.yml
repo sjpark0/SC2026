@@ -1,0 +1,7 @@
+services:
+  redis:
+    image: redis:7
+    container_name: npo-cli-redis
+    restart: unless-stopped
+    ports:
+      - "30108:6379"

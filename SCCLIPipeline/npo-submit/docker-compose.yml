@@ -1,0 +1,15 @@
+services:
+  npo-cli-submit:
+    build:
+      context: ..
+      dockerfile: npo-submit/Dockerfile
+    image: npo-cli-submit:latest
+    container_name: npo-cli-submit
+    env_file:
+      - .env
+    environment:
+      TZ: Asia/Seoul
+    volumes:
+      - ${NAS_ROOT}:${NAS_ROOT}
+    stdin_open: true
+    tty: true

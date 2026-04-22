@@ -1,0 +1,5 @@
+docker run --gpus all -it --rm -v ../Data2/Sample:/etri_workspace/Data -v ../Data2/Input:/etri_workspace/Input -v ../Data2/Output:/etri_workspace/Output etri_scapi:0.1.4 python run_init.py
+docker run --gpus all -it --rm -v ../Data2/Sample:/etri_workspace/Data etri_scapi:0.1.4 python run_build_param.py
+docker run --gpus all -it --rm -v ../Data2/Sample:/etri_workspace/Data etri_scapi:0.1.4 python run_build_layer.py --factor 4
+docker run --gpus all -it --rm -v ../Data2/Sample:/etri_workspace/Data -v ../Data2/Output:/etri_workspace/Output etri_scapi:0.1.4 python run_render.py --view_range 1.0 --focal 50 --num_views 49 --save_viewing
+docker run --gpus all -it --rm -v ../Data2/Sample:/etri_workspace/Data -v ../Data2/Output:/etri_workspace/Output etri_scapi:0.1.4 python run_render_quilt.py --view_range 1.0 --focal 50 --rows 7 --cols 7

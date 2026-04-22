@@ -1,0 +1,26 @@
+[project]
+name = "npo-cli-pipeline"
+version = "0.1.0"
+description = "CLI-first job queue and worker pipeline for NPO processing"
+readme = "README.md"
+requires-python = ">=3.12.9"
+dependencies = [
+    "celery>=5.5.3",
+    "loguru>=0.7.3",
+    "npo-engine-lib>=0.1.0",
+    "python-dotenv>=1.1.1",
+    "redis>=6.2.0",
+]
+
+[project.scripts]
+npo-cli = "npo_cli_pipeline.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.8.0,<0.9"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "npo_cli_pipeline"
+
+[tool.uv.sources]
+npo_engine_lib = { path = "npo-engine-lib", editable = true }

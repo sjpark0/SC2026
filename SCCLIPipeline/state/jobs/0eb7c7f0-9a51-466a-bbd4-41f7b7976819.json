@@ -1,0 +1,17 @@
+{
+  "job_id": "0eb7c7f0-9a51-466a-bbd4-41f7b7976819",
+  "operation": "preprocess-video",
+  "status": "queued",
+  "params": {
+    "source_folder": "/home/sjpark/Documents/Webapp/npo-cli-pipeline/Server/DockerTest1/temp/Test",
+    "target_folder": "/home/sjpark/Documents/Webapp/npo-cli-pipeline/Server/DockerTest1/temp/output1",
+    "factor": 4,
+    "param_frame": 1,
+    "start_frame": 1,
+    "finish_frame": 5
+  },
+  "created_at": "2026-04-17T02:21:27.837808+00:00",
+  "updated_at": "2026-04-17T02:21:27.837830+00:00",
+  "result": null,
+  "error": null
+}

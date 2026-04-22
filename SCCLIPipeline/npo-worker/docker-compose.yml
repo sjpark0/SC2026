@@ -1,0 +1,16 @@
+services:
+  npo-cli-worker:
+    build:
+      context: ..
+      dockerfile: npo-worker/Dockerfile
+    image: npo-cli-worker:latest
+    container_name: npo-cli-worker
+    env_file:
+      - .env
+    environment:      
+      HOST_CWD: ${HOST_CWD:-}
+      TZ: Asia/Seoul
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${NAS_ROOT}:${NAS_ROOT}
+    restart: unless-stopped
