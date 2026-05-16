@@ -82,7 +82,21 @@ def command_submit(args: argparse.Namespace) -> int:
             ),
             params,
         )
-
+    if args.submit_command == "init-engine":
+        params = {
+            "source_folder" : args.source_folder,
+            "target_folder" : args.target_folder,
+        }
+        return submit_job(
+            "init-engine",
+            "jobs.init_engine",
+            (
+                args.source_folder,
+                args.target_folder,
+            ),
+            params,
+        )
+    
     if args.submit_command == "extract-video-frame":
         validate_frame_range(args.start_frame, args.finish_frame)
         params = {
@@ -321,6 +335,11 @@ def build_parser() -> argparse.ArgumentParser:
     preprocess_video.add_argument("--param-frame", type=positive_int, required=True)
     preprocess_video.add_argument("--start-frame", type=non_negative_int, required=True)
     preprocess_video.add_argument("--finish-frame", type=positive_int, required=True)
+    preprocess_video.set_defaults(func=command_submit)
+
+    preprocess_video = submit_subparsers.add_parser("init-engine", help="initialize engine")
+    preprocess_video.add_argument("--source-folder", required=True)
+    preprocess_video.add_argument("--target-folder", required=True)
     preprocess_video.set_defaults(func=command_submit)
 
     preprocess_video = submit_subparsers.add_parser("extract-video-frame", help="extract video frame")

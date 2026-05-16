@@ -164,6 +164,28 @@ def preprocess_video(
         "finish_frame": actual_finish,
         "param_frame": actual_param,
     }
+def init_engine(
+    job_id : str,
+    source_folder: str,
+    target_folder: str,
+    log: LogFn,
+) -> dict:
+    settings = get_settings()
+    source = _ensure_existing_directory(source_folder, "source folder")
+    target = _ensure_directory(target_folder)
+    
+    log(f"init engine from {source} to {target}")
+    container, command = engine_run.init(
+        settings.engine_image,
+        str(target),
+        str(source),
+        str(target),
+    )
+    _run_container(container, command, log)
+    return {
+        "job_id": job_id,
+        "work_folder": str(target),
+    }
 
 def extract_video_frame(
     job_id : str,

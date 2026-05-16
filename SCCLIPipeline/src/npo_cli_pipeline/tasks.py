@@ -136,6 +136,32 @@ def extract_video_frame_task(
         raise
 
 
+@app.task(bind=True, name="jobs.init_engine")
+def extract_video_frame_task(
+    self: Task,
+    job_id: str,
+    source_folder: str,
+    target_folder: str,
+) -> dict:
+    payload = {
+        "operation": "init-engine",
+        "source_folder": source_folder,
+        "target_folder": target_folder,
+    }
+    _start_job(job_id, payload)
+    try:
+        result = operations.init_engine(
+            job_id,
+            source_folder,
+            target_folder,
+            _job_logger(job_id),
+        )
+        return _finish_job(job_id, result)
+    except Exception as error:
+        _fail_job(job_id, error)
+        raise
+
+
 @app.task(bind=True, name="jobs.build_param")
 def build_param_task(
     self: Task,
