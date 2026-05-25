@@ -71,8 +71,12 @@ def _wait_for_file(path: Path, log: LogFn, timeout_seconds: float = 5.0, interva
 
 
 def _resolve_extracted_frames(work_folder: Path, param_frame: int, log: LogFn) -> tuple[int, int, int]:
+    log(work_folder)
     result_json = work_folder / "extract_frames_result.json"
+    log("_resolve_extracted_frames")
+
     if _wait_for_file(result_json, log):
+        log("_resolve_extracted_frames")
         data = json.loads(result_json.read_text(encoding="utf-8"))
         actual_start = int(data["start_frame"])
         actual_finish = int(data["end_frame"])
@@ -196,8 +200,9 @@ def extract_video_frame(
     log: LogFn,
 ) -> dict:
     settings = get_settings()
-    work_folder = _prepare_video_workspace(source_folder, target_folder, log)
-
+    #work_folder = _prepare_video_workspace(source_folder, target_folder, log)
+    
+    work_folder = _ensure_directory(target_folder)
     log(f"Extracting frames from {work_folder} to {work_folder}")
     container, command = engine_run.extract_frames(
         settings.engine_image,
@@ -222,8 +227,8 @@ def build_param(
     log: LogFn,
 ) -> dict:
     settings = get_settings()
-    work_folder = _prepare_video_workspace(source_folder, target_folder, log)
-    
+    #work_folder = _prepare_video_workspace(source_folder, target_folder, log)
+    work_folder = _ensure_directory(target_folder)
     actual_start, actual_finish, actual_param = _resolve_extracted_frames(work_folder, param_frame, log)
     
     container, command = engine_run.build_param(settings.engine_image, str(work_folder), actual_param)
@@ -246,8 +251,8 @@ def build_layer(
     log: LogFn,
 ) -> dict:
     settings = get_settings()
-    work_folder = _prepare_video_workspace(source_folder, target_folder, log)
-    
+    #work_folder = _prepare_video_workspace(source_folder, target_folder, log)
+    work_folder = _ensure_directory(target_folder)
     result_json = work_folder / "extract_frames_result.json"
     if _wait_for_file(result_json, log):
         data = json.loads(result_json.read_text(encoding="utf-8"))
